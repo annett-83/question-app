@@ -1,9 +1,4 @@
- const professions = {
-   teacher: { _id: "67rdca3eeb7f6fgeed471818", name: "Учитель" },
-   pupil: { _id: "67rdca3eeb7f6fgeed471820", name: "Учeник" },
-   student: { _id: "67rdca3eeb7f6fgeed471814", name: "Студент" },
- };
-
+ import { professions } from "./professions.api";
 const subjects = {
   chemi: {
     _id: "67rdca3eeb7f6fgeed471198",
@@ -26,16 +21,14 @@ const subjects = {
     color: "success",
   },
 };
-
-
 const users = [
   {
-    _id: "67rdca3eeb7f6fgeed471815",
-    name: "Мария Ивановна Смирнова",
-    email: "Jony7351@tw.com",
+    _id: "67rdca3eeb7f6fgeed471821",
+    name: "Ольга Дмитриевна Пауцук",
+    email: "Jontik7351@tw.com",
     sex: "female",
-    profession: professions.teacher,
-    subjects: [subjects.chemi, subjects.physic],
+    profession: professions.pupil,
+    subjects: [subjects.german, subjects.physic],
     numberOfQuestions: 36,
     rate: 2.5,
     bookmark: false,
@@ -63,14 +56,14 @@ const users = [
     bookmark: false,
   },
   {
-    _id: "67rdca3eeb7f6fgeed471818",
-    name: "Рэйчел Грин",
-    email: "green7311@fam.biz",
+    _id: "67rdca3eeb7f6fgeed471825",
+    name: "Вуппи Голберг",
+    email: "golberg71@fam.vz",
     sex: "female",
-    profession: professions.teacher,
-    subjects: [subjects.chemi, subjects.biolog],
-    numberOfQuestions: 148,
-    rate: 3.5,
+    profession: professions.pupil,
+    subjects: [subjects.biolog],
+    numberOfQuestions: 158,
+    rate: 3,
     bookmark: false,
   },
   {

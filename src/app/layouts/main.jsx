@@ -22,7 +22,7 @@ const Main = () => {
         <h3 className="card-title">
           Учись легче, учась быстрее, учись свободнее...
         </h3>
-        <Link to="/online" className="btn btn-warning">
+        <Link to="/CommentsPage" className="btn btn-warning">
           GO!
         </Link>
       </div>

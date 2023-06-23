@@ -1,4 +1,4 @@
-const subjects = {
+export const subjects = {
   chemi: {
     _id: "67rdca3eeb7f6fgeed471198",
     name: "химия",
