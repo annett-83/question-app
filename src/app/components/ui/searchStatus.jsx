@@ -1,9 +1,7 @@
 import React from "react";
-import api from "../../api";
 import PropTypes from "prop-types";
 
 const SearchStatus = ({ length }) => {
-    const comments = api.comments.fetchAll();
     const renderPhrase = (number) => {
         const lastOne = Number(number.toString().slice(-1));
         if ([2, 3, 4].indexOf(lastOne) > 0);
@@ -17,11 +15,11 @@ const SearchStatus = ({ length }) => {
         <h2>
             <span
                 className={
-                    "badge bg-" + (comments.length > 0 ? "primary" : "danger")
+                    "badge bg-" + (length > 0 ? "primary" : "danger")
                 }
             >
-                {comments.length > 0
-                    ? `Уже ${comments.length} ${renderPhrase(comments.length)}`
+                {length > 0
+                    ? `Уже ${length} ${renderPhrase(length)}`
                     : "вопросов сегдня нет"}
             </span>
         </h2>

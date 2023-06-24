@@ -48,27 +48,27 @@ const comments = [
         subjects: [subjects.chemi, subjects.physic],
         price: "150 руб",
         section: "organic chemie",
-        userId: "67rdca3eeb7f6fgeed471817",
+        userId: "67rdca3eeb7f6fgeed471823",
         content: "Lorem ipsum dolor and etc",
         created_at: "1633573058520"
     },
     {
         _id: "67rdca3eeb7f6fgdaasd2",
-        pageId: "67rdca3eeb7f6fgeed471817",
+        pageId: "67rdca3eeb7f6fgeed471856",
         subjects: [subjects.chemi, subjects.physic],
         price: "150 руб",
         section: "organic chemie",
-        userId: "67rdca3eeb7f6fgeed471817",
+        userId: "67rdca3eeb7f6fgeed471824",
         content: "Lorem ipsum dolor and etc",
         created_at: "1633573058520"
     },
     {
         _id: "67rdca3eeb7f6fgdaasd3",
-        pageId: "67rdca3eeb7f6fgeed471817",
+        pageId: "67rdca3eeb7f6fgeed471857",
         subjects: [subjects.chemi],
         price: "150 руб",
         section: "organic chemie",
-        userId: "67rdca3eeb7f6fgeed471817",
+        userId: "67rdca3eeb7f6fgeed471825",
         content: "Lorem ipsum dolor and etc",
         created_at: "1633573058520"
     }
@@ -78,12 +78,12 @@ export function fetchAll() {
 }
 
 /* const fetchAll = () =>
-  new Promise((resolve) => {
-    window.setTimeout(function () {
-      resolve(comments);
-    }, 2000);
-  });
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(comments);
+        }, 2000);
+    });
 
 export default {
-  fetchAll,
+    fetchAll
 }; */

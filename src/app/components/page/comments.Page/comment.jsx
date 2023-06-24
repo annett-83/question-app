@@ -1,17 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Subject from "../../ui/subjects/subject";
 
-const Comment = ({ _id, subjects, price, section, content, userId }) => {
+const Comment = ({
+    _id,
+    subjects,
+    price,
+    section,
+    content,
+    userId,
+    onDelete
+}) => {
     return (
-        <tr key={_id}>
+        <tr>
             <td>
                 {subjects.map((item) => (
-                    <span
-                        className={"badge m-1 bg-" + item.color}
-                        key={item._id}
-                    >
-                        {item.name}
-                    </span>
+                    <Subject key={item._id} {...item} />
                 ))}
             </td>
             <td>{section}</td>
@@ -24,7 +28,11 @@ const Comment = ({ _id, subjects, price, section, content, userId }) => {
                 </button>
             </td>
             <td>
-                <button type="button" className="btn btn-success">
+                <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => onDelete(_id)}
+                >
                     Ответить
                 </button>
             </td>
@@ -37,7 +45,8 @@ Comment.propTypes = {
     section: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
-    userId: PropTypes.string.isRequired
+    userId: PropTypes.string.isRequired,
+    onDelete: PropTypes.func.isRequired
 };
 
 export default Comment;

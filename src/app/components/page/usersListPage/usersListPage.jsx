@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import api from "../../../api";
 const UsersListPage = () => {
-    const [users] = useState(api.users.fetchAll());
+    const [users, setUsers] = useState(api.users.fetchAll());
     return (
         <div>
             <span
