@@ -10,7 +10,7 @@ const GroupList = ({
 }) => {
     if (!Array.isArray(items)) {
         return (
-            <ul className="list-group">
+            <ul className="list-group-item list-group-item-success border border-dark text-danger">
                 {Object.keys(items).map((item) => (
                     <li
                         key={items[item][valueProperty]}
@@ -28,7 +28,7 @@ const GroupList = ({
         );
     }
     return (
-        <ul className="list-group">
+        <ul className="list-group-item list-group-item-success">
             {items.map((item) => (
                 <li
                     key={item[valueProperty]}

@@ -1,20 +1,46 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import Comment from "./comment";
 import Pagination from "../../common/table/pagination";
 import { paginate } from "../../../utils/paginate";
 import GroupList from "../../common/table/groupList";
 import api from "../../../api";
 import SearchStatus from "../../ui/searchStatus";
-const Comments = ({ comments: allComments, ...rest }) => {
+import CommentsTable from "../../commentsTable";
+import _ from "lodash";
+
+const Comments = () => {
     const pageSize = 2;
     const [currentPage, setCurrentPage] = useState(1);
-    const [subjects, setSubject] = useState();
+    const [subjects, setSubjects] = useState();
     const [selectedSubject, setSelectedSubject] = useState();
+    const [users, setUsers] = useState();
+    const [sortBy, setSortBy] = useState({ path: "price", order: "desc" });
+
+    const [comments, setComments] = useState();
+    useEffect(() => {
+        api.comments.fetchAll().then((data) => setComments(data));
+    }, []);
+    // console.log(comments);
+    const handleDelete = (commentId) => {
+        setComments(comments.filter((comment) => comment._id !== commentId));
+    };
 
     useEffect(() => {
-        api.subjects.fetchAll().then((data) => setSubject(data));
+        api.users.fetchAll().then((data) => setUsers(data));
     }, []);
+    if (users) {
+        comments.forEach((c) => {
+            const fu = users.find((u) => u._id === c.userId);
+            if (fu) {
+                c.userName = fu.name;
+            }
+        });
+    }
+
+    useEffect(() => {
+        api.subjects.fetchAll().then((data) => setSubjects(data));
+    }, []);
+    // console.log(subjects);
     useEffect(() => {
         setCurrentPage(1);
     }, [selectedSubject]);
@@ -24,78 +50,82 @@ const Comments = ({ comments: allComments, ...rest }) => {
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
-    // functioniert nicht?????
-    const filteredComments = selectedSubject
-        ? allComments.filter((comment) => comment.subjects === selectedSubject)
-        : allComments;
-    console.log(selectedSubject);
-    const count = filteredComments.length;
-    const commentCrop = paginate(filteredComments, currentPage, pageSize);
-    //
-    const clearFilter = () => {
-        setSelectedSubject();
+    const handleSort = (item) => {
+        setSortBy(item);
     };
+    if (comments) {
+        const filteredComments = selectedSubject
+            ? comments.filter(
+                (comment) =>
+                    JSON.stringify(comment.subject) ===
+                    JSON.stringify(selectedSubject)
+            )
+            : comments;
 
-    return (
-        <div className="d-flex">
-            {subjects && (
-                <div className="d-flex flex-column flex-shrink-0 p-3">
-                    <GroupList
-                        items={subjects}
-                        onItemSelect={handleSubjectSelect}
-                        selectedItem={selectedSubject}
-                    />
+        const count = filteredComments.length;
+        const sortedComments = _.orderBy(
+            filteredComments,
+            [sortBy.path],
+            [sortBy.order]
+        );
+        const commentCrop = paginate(sortedComments, currentPage, pageSize);
+        //
+        const clearFilter = () => {
+            setSelectedSubject();
+        };
+
+        return (
+            <div className="d-flex">
+                {subjects && (
+                    <div className="d-flex flex-column flex-shrink-0 p-3">
+                        <p className="text-justify fw-bold text-warning border-bottom">
+                            Выберите предмет
+                        </p>
+                        <GroupList
+                            items={subjects}
+                            onItemSelect={handleSubjectSelect}
+                            selectedItem={selectedSubject}
+                        />
+                        <button
+                            className="btn btn-secondary mt-2"
+                            onClick={clearFilter}
+                        >
+                            Отчистить
+                        </button>
+                    </div>
+                )}
+                <div className="d-flex flex-column">
+                    <SearchStatus length={count} />
+                    {count > 0 && (
+                        <CommentsTable
+                            comments={commentCrop}
+                            onSort={handleSort}
+                            selectedSort={sortBy}
+                            onDelete={handleDelete}
+                        />
+                    )}
+                    <div className="d-flex justify-content-center">
+                        <Pagination
+                            itemsCount={count}
+                            pageSize={pageSize}
+                            currentPage={currentPage}
+                            onPageChange={handlePageChange}
+                        />
+                    </div>
                     <button
-                        className="btn btn-secondary mt-2"
-                        onClick={clearFilter}
+                        type="button"
+                        className="btn btn-primary btn-lg btn-block"
                     >
-                        Отчистить
+                        Задай свой вопрос
+                    </button>
+                    <button type="button" className="btn btn-outline-danger">
+                        Учителя онлайн
                     </button>
                 </div>
-            )}
-            <div className="d-flex flex-column">
-                <SearchStatus length={count} />
-                {count > 0 && (
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Предмет</th>
-                                <th scope="col">Раздел</th>
-                                <th scope="col">Вопрос</th>
-                                <th scope="col">Цена</th>
-                                <th scope="col">Имя</th>
-                                <th scope="col">Посмотреть вопрос полность</th>
-                                <th scope="col">Ответить на вопрос</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {commentCrop.map((comment) => (
-                                <Comment
-                                    key={comment._id}
-                                    {...rest}
-                                    {...comment}
-                                />
-                            ))}
-                        </tbody>
-                    </table>
-                )}
-                <div className="d-flex justify-content-center">
-                    <Pagination
-                        itemsCount={count}
-                        pageSize={pageSize}
-                        currentPage={currentPage}
-                        onPageChange={handlePageChange}
-                    />
-                </div>
-                <button
-                    type="button"
-                    className="btn btn-primary btn-lg btn-block"
-                >
-                    Задай свой вопрос
-                </button>
             </div>
-        </div>
-    );
+        );
+    }
+    return "Loading...";
 };
 Comments.propTypes = {
     comments: PropTypes.array

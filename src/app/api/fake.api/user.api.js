@@ -21,7 +21,7 @@ const subjects = {
         color: "success"
     }
 };
-const users = [
+export const users = [
     {
         _id: "67rdca3eeb7f6fgeed471821",
         name: "Ольга Дмитриевна Пауцук",
@@ -89,6 +89,12 @@ const users = [
         bookmark: false
     }
 ];
-export function fetchAll() {
-    return users;
-}
+const fetchAll = () =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(users);
+        }, 2000);
+    });
+export default {
+    fetchAll
+};

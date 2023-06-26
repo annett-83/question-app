@@ -1,17 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-const Subject = ({ _id, color, name }) => {
+const Subject = ({ subject }) => {
+    // console.log("Subject komponente", subject.name);
     return (
-        <span className={"badge m-1 bg-" + color} >
-            {name}
-        </span>
+        <span className={"badge m-1 bg-" + subject.color}>{subject.name}</span>
     );
-    // return "something";
 };
 Subject.propTypes = {
-    _id: PropTypes.string.isRequired,
-    color: PropTypes.string,
-    name: PropTypes.string
+    subject: PropTypes.object
 };
 
 export default Subject;
