@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Pagination from "../../common/table/pagination";
 import { paginate } from "../../../utils/paginate";
-import GroupList from "../../common/table/groupList";
+import GroupList from "../../../components/common/table/groupList";
 import api from "../../../api";
-import SearchStatus from "../../ui/searchStatus";
-import CommentsTable from "../../commentsTable";
+import SearchStatus from "../../../components/ui/searchStatus";
+import CommentsTable from "../../../components/commentsTable";
 import _ from "lodash";
 
-const Comments = () => {
+const CommentsList = () => {
     const pageSize = 2;
     const [currentPage, setCurrentPage] = useState(1);
     const [subjects, setSubjects] = useState();
@@ -127,7 +127,7 @@ const Comments = () => {
     }
     return "Loading...";
 };
-Comments.propTypes = {
+CommentsList.propTypes = {
     comments: PropTypes.array
 };
-export default Comments;
+export default CommentsList;

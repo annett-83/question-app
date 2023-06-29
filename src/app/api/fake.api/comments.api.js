@@ -36,7 +36,7 @@ export const comments = [
         pageId: "67rdca3eeb7f6fgeed471856",
         subject: subjects.biolog,
         price: 50,
-        section: "organic chemie",
+        section: "Ботаника",
         userId: "67rdca3eeb7f6fgeed471824",
         content: "Lorem ipsum dolor and etc",
         created_at: "1633573058520"
@@ -46,7 +46,7 @@ export const comments = [
         pageId: "67rdca3eeb7f6fgeed471857",
         subject: subjects.german,
         price: 2500,
-        section: "organic chemie",
+        section: "Substantiv-Глагол",
         userId: "67rdca3eeb7f6fgeed471825",
         content: "Lorem ipsum dolor and etc",
         created_at: "1633573058520"
@@ -60,6 +60,14 @@ const fetchAll = () =>
         }, 2000);
     });
 
+const getById = (id) =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(comments.find((comment) => comment._id === id));
+        }, 1000);
+    });
+
 export default {
-    fetchAll
+    fetchAll,
+    getById
 };
