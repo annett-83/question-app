@@ -4,48 +4,37 @@ import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
 import GroupList from "../../common/groupList";
 import api from "../../../api";
-import SearchStatus from "../../../components/ui/searchStatus";
-import CommentsTable from "../../../components/commentsTable";
+import SearchStatus from "../../ui/searchStatus";
+import TeacherTable from "../../teacherTable";
 import _ from "lodash";
-import { useHistory } from "react-router-dom";
 
-const CommentsList = () => {
+const UserTeacherList = () => {
     const pageSize = 2;
     const [currentPage, setCurrentPage] = useState(1);
     const [subjects, setSubjects] = useState();
     const [selectedSubject, setSelectedSubject] = useState();
-    const [users, setUsers] = useState();
     const [sortBy, setSortBy] = useState({ path: "price", order: "desc" });
-    const history = useHistory();
-
-    const [comments, setComments] = useState();
-    useEffect(() => {
-        api.comments.fetchAll().then((data) => setComments(data));
-    }, []);
-    console.log(comments);
-    const handleDelete = (commentId) => {
-        setComments(comments.filter((comment) => comment._id !== commentId));
-    };
-    const handleOnClick = (commentId) => {
-        history.push("/comments/" + commentId);
-    };
+    const [userTeachers, setUserTeachers] = useState();
 
     useEffect(() => {
-        api.users.fetchAll().then((data) => setUsers(data));
+        api.userTeachers.fetchAll().then((data) => setUserTeachers(data));
     }, []);
-    if (users) {
-        comments.forEach((c) => {
-            const fu = users.find((u) => u._id === c.userId);
-            if (fu) {
-                c.userName = fu.name;
+    console.log(userTeachers);
+
+    const handleToggleBookMark = (id) => {
+        const newArray = userTeachers.map((userTeacher) => {
+            if (userTeacher._id === id) {
+                return { ...userTeacher, bookmark: !userTeacher.bookmark };
             }
+            return userTeacher;
         });
-    }
+        setUserTeachers(newArray);
+    };
 
     useEffect(() => {
         api.subjects.fetchAll().then((data) => setSubjects(data));
     }, []);
-    // console.log(subjects);
+    console.log(subjects);
     useEffect(() => {
         setCurrentPage(1);
     }, [selectedSubject]);
@@ -58,22 +47,22 @@ const CommentsList = () => {
     const handleSort = (item) => {
         setSortBy(item);
     };
-    if (comments) {
-        const filteredComments = selectedSubject
-            ? comments.filter(
-                (comment) =>
-                    JSON.stringify(comment.subject) ===
+    if (userTeachers) {
+        const filteredTeachers = selectedSubject
+            ? userTeachers.filter(
+                (userTeacher) =>
+                    JSON.stringify(userTeacher.subject) ===
                     JSON.stringify(selectedSubject)
             )
-            : comments;
+            : userTeachers;
 
-        const count = filteredComments.length;
-        const sortedComments = _.orderBy(
-            filteredComments,
+        const count = filteredTeachers.length;
+        const sortedTeachers = _.orderBy(
+            filteredTeachers,
             [sortBy.path],
             [sortBy.order]
         );
-        const commentCrop = paginate(sortedComments, currentPage, pageSize);
+        const commentCrop = paginate(sortedTeachers, currentPage, pageSize);
         //
         const clearFilter = () => {
             setSelectedSubject();
@@ -102,12 +91,11 @@ const CommentsList = () => {
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
                     {count > 0 && (
-                        <CommentsTable
+                        <TeacherTable
                             comments={commentCrop}
                             onSort={handleSort}
                             selectedSort={sortBy}
-                            onDelete={handleDelete}
-                            onClick={handleOnClick}
+                            onToggleBookMark={handleToggleBookMark}
                         />
                     )}
                     <div className="d-flex justify-content-center">
@@ -133,7 +121,7 @@ const CommentsList = () => {
     }
     return "Loading...";
 };
-CommentsList.propTypes = {
+UserTeacherList.propTypes = {
     comments: PropTypes.array
 };
-export default CommentsList;
+export default UserTeacherList;

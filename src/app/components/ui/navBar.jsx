@@ -43,6 +43,33 @@ const NavBar = () => {
                             Вопросы
                         </Link>
                     </li>
+                    <li className="nav-item">
+                        <Link
+                            className="nav-link active"
+                            aria-current="page"
+                            to="/responsePage"
+                        >
+                            Ответить
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link
+                            className="nav-link active"
+                            aria-current="page"
+                            to="/userPage"
+                        >
+                            Ученик
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link
+                            className="nav-link active"
+                            aria-current="page"
+                            to="/userTeacherList"
+                        >
+                            Учитель
+                        </Link>
+                    </li>
                 </ul>
             </div>
             <div className="card-footer text-muted">

@@ -2,36 +2,49 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import api from "../../../api";
 import Subject from "../../ui/subjects/subject";
+import { useHistory } from "react-router-dom";
 
 const CommentPage = ({ commentId }) => {
+    console.log("Commentpage aufgerufen mit id ", commentId);
+    const history = useHistory();
     const [comment, setComment] = useState();
     useEffect(() => {
         api.comments.getById(commentId).then((data) => setComment(data));
-    });
+    }, []);
+
+    const handleClickBack = () => {
+        history.push("/comments");
+    };
+    const handleClickResponce = () => {
+        history.push("/responsePage");
+    };
     if (comment) {
         return (
             <div>
                 <h1 className="text-center">
                     <Subject subject={comment.subject} />
                 </h1>
-                <div className="accordion" id="accordionExample">
-                    <div className="accordion-item ">
+                <div
+                    className="accordion accordion-flush"
+                    id="accordionFlushExample"
+                >
+                    <div className="accordion-item">
                         <h2 className="accordion-header">
                             <button
-                                className="accordion-button"
+                                className="accordion-button collapsed text-uppercase"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne"
-                                aria-expanded="true"
-                                aria-controls="collapseOne"
+                                data-bs-target="#flush-collapseOne"
+                                aria-expanded="false"
+                                aria-controls="flush-collapseOne"
                             >
                                 Раздел
                             </button>
                         </h2>
                         <div
-                            id="collapseOne"
-                            className="accordion-collapse collapse show"
-                            data-bs-parent="#accordionExample"
+                            id="flush-collapseOne"
+                            className="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample"
                         >
                             <div className="accordion-body">
                                 <strong>{comment.section}</strong>
@@ -41,20 +54,20 @@ const CommentPage = ({ commentId }) => {
                     <div className="accordion-item">
                         <h2 className="accordion-header">
                             <button
-                                className="accordion-button collapsed"
+                                className="accordion-button collapsed text-uppercase"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo"
+                                data-bs-target="#flush-collapseTwo"
                                 aria-expanded="false"
-                                aria-controls="collapseTwo"
+                                aria-controls="flush-collapseTwo"
                             >
                                 Содержание вопроса
                             </button>
                         </h2>
                         <div
-                            id="collapseTwo"
+                            id="flush-collapseTwo"
                             className="accordion-collapse collapse"
-                            data-bs-parent="#accordionExample"
+                            data-bs-parent="#accordionFlushExample"
                         >
                             <div className="accordion-body">
                                 <strong>{comment.content}</strong>
@@ -64,26 +77,45 @@ const CommentPage = ({ commentId }) => {
                     <div className="accordion-item">
                         <h2 className="accordion-header">
                             <button
-                                className="accordion-button collapsed"
+                                className="accordion-button collapsed text-uppercase"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#collapseThree"
+                                data-bs-target="#flush-collapseThree"
                                 aria-expanded="false"
-                                aria-controls="collapseThree"
+                                aria-controls="flush-collapseThree"
                             >
                                 Цена вопроса
                             </button>
                         </h2>
                         <div
-                            id="collapseThree"
+                            id="flush-collapseThree"
                             className="accordion-collapse collapse"
-                            data-bs-parent="#accordionExample"
+                            data-bs-parent="#accordionFlushExample"
                         >
                             <div className="accordion-body">
                                 <strong>{comment.price}</strong>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div
+                    className="btn-group btn-group-lg"
+                    role="group"
+                    aria-label="Группа больших кнопок"
+                >
+                    <button
+                        type="button"
+                        className="btn btn-outline-dark  btn-warning"
+                        onClick={handleClickBack}
+                    >
+                        Назад
+                    </button>
+                    <button
+                        type="button"
+                        className="btn btn-outline-dark btn-success" onClick={handleClickResponce}
+                    >
+                        Ответить
+                    </button>
                 </div>
             </div>
         );

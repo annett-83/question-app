@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Subject from "./ui/subjects/subject";
-import Table from "./table";
+import Table from "./common/table/table";
 
 const CommentsTable = ({
     comments,
@@ -10,6 +10,7 @@ const CommentsTable = ({
     _id,
     subject,
     onDelete,
+    onClick,
     ...rest
 }) => {
     const columns = {
@@ -24,7 +25,11 @@ const CommentsTable = ({
         button: {
             name: "Посмотреть",
             component: (comment) => (
-                <button type="button" className="btn btn-warning">
+                <button
+                    type="button"
+                    className="btn btn-warning"
+                    onClick={() => onClick(comment._id)}
+                >
                     Посмотреть
                 </button>
             )
@@ -57,7 +62,8 @@ CommentsTable.propTypes = {
     comments: PropTypes.array.isRequired,
     onSort: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
-    selectedSort: PropTypes.object.isRequired
+    selectedSort: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired
 };
 
 export default CommentsTable;

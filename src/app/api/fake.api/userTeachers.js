@@ -27,7 +27,7 @@ const subjects = {
     }
 };
 
-const usersTeacher = [
+export const userTeachers = [
     {
         _id: "67rdca3eeb7f6fgeed471815",
         name: "Мария Ивановна Смирнова",
@@ -74,6 +74,12 @@ const usersTeacher = [
     }
 ];
 
-export function fetchAll() {
-    return usersTeacher;
-}
+const fetchAll = () =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(userTeachers);
+        }, 2000);
+    });
+export default {
+    fetchAll
+};

@@ -1,2 +1,4 @@
-import CommentsPage from "./editUserPage";
-export default CommentsPage;
+import CommentPage from "./commentPage";
+import CommentsList from "./commentsList";
+export { CommentsList };
+export default CommentPage;
