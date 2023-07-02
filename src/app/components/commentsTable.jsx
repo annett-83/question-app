@@ -39,10 +39,10 @@ const CommentsTable = ({
             component: (comment) => (
                 <button
                     type="button"
-                    className="btn btn-success"
+                    className="btn btn-danger"
                     onClick={() => onDelete(comment._id)}
                 >
-                    Ответить
+                    Удалить
                 </button>
             )
         }

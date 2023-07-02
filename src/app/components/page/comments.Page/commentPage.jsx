@@ -5,7 +5,7 @@ import Subject from "../../ui/subjects/subject";
 import { useHistory } from "react-router-dom";
 
 const CommentPage = ({ commentId }) => {
-    console.log("Commentpage aufgerufen mit id ", commentId);
+    // console.log("Commentpage aufgerufen mit id ", commentId);
     const history = useHistory();
     const [comment, setComment] = useState();
     useEffect(() => {

@@ -4,9 +4,9 @@ import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
 import GroupList from "../../common/groupList";
 import api from "../../../api";
-import SearchStatus from "../../ui/searchStatus";
 import TeacherTable from "../../teacherTable";
 import _ from "lodash";
+import SearchStatusTeacher from "../../ui/searchStatusTeacher";
 
 const UserTeacherList = () => {
     const pageSize = 2;
@@ -15,20 +15,21 @@ const UserTeacherList = () => {
     const [selectedSubject, setSelectedSubject] = useState();
     const [sortBy, setSortBy] = useState({ path: "price", order: "desc" });
     const [userTeachers, setUserTeachers] = useState();
-
     useEffect(() => {
         api.userTeachers.fetchAll().then((data) => setUserTeachers(data));
     }, []);
     console.log(userTeachers);
 
     const handleToggleBookMark = (id) => {
-        const newArray = userTeachers.map((userTeacher) => {
-            if (userTeacher._id === id) {
-                return { ...userTeacher, bookmark: !userTeacher.bookmark };
-            }
-            return userTeacher;
-        });
-        setUserTeachers(newArray);
+        if (userTeachers) {
+            const newArray = userTeachers.map((userTeacher) => {
+                if (userTeacher._id === id) {
+                    return { ...userTeacher, bookmark: !userTeacher.bookmark };
+                }
+                return userTeacher;
+            });
+            setUserTeachers(newArray);
+        }
     };
 
     useEffect(() => {
@@ -48,11 +49,17 @@ const UserTeacherList = () => {
         setSortBy(item);
     };
     if (userTeachers) {
+        const hasTeacherSubject = (teacher, subject) => {
+            return (
+                teacher.subjects.filter(
+                    (tsubject) => tsubject._id === subject._id
+                ).length > 0
+            );
+        };
+
         const filteredTeachers = selectedSubject
-            ? userTeachers.filter(
-                (userTeacher) =>
-                    JSON.stringify(userTeacher.subject) ===
-                    JSON.stringify(selectedSubject)
+            ? userTeachers.filter((userTeacher) =>
+                hasTeacherSubject(userTeacher, selectedSubject)
             )
             : userTeachers;
 
@@ -62,8 +69,7 @@ const UserTeacherList = () => {
             [sortBy.path],
             [sortBy.order]
         );
-        const commentCrop = paginate(sortedTeachers, currentPage, pageSize);
-        //
+        const userTeacherCrop = paginate(sortedTeachers, currentPage, pageSize);
         const clearFilter = () => {
             setSelectedSubject();
         };
@@ -89,13 +95,13 @@ const UserTeacherList = () => {
                     </div>
                 )}
                 <div className="d-flex flex-column">
-                    <SearchStatus length={count} />
+                    <SearchStatusTeacher length={count} />
                     {count > 0 && (
                         <TeacherTable
-                            comments={commentCrop}
                             onSort={handleSort}
                             selectedSort={sortBy}
                             onToggleBookMark={handleToggleBookMark}
+                            userTeachers={userTeacherCrop}
                         />
                     )}
                     <div className="d-flex justify-content-center">
@@ -106,15 +112,6 @@ const UserTeacherList = () => {
                             onPageChange={handlePageChange}
                         />
                     </div>
-                    <button
-                        type="button"
-                        className="btn btn-primary btn-lg btn-block"
-                    >
-                        Задай свой вопрос
-                    </button>
-                    <button type="button" className="btn btn-outline-danger">
-                        Учителя онлайн
-                    </button>
                 </div>
             </div>
         );

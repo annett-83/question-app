@@ -73,13 +73,60 @@ export const userTeachers = [
         bookmark: false
     }
 ];
+if (!localStorage.getItem("userTeachers")) {
+    localStorage.setItem("userTeachers", JSON.stringify(userTeachers));
+}
 
 const fetchAll = () =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(JSON.parse(localStorage.getItem("userTeachers")));
+        }, 2000);
+    });
+const update = (id, data) =>
+    new Promise((resolve) => {
+        const userTeachers = JSON.parse(localStorage.getItem("userTeachers"));
+        const userTeacherIndex = userTeachers.findIndex((u) => u._id === id);
+        userTeachers[userTeacherIndex] = {
+            ...userTeachers[userTeacherIndex],
+            ...data
+        };
+        localStorage.setItem("userTeachers", JSON.stringify(userTeachers));
+        resolve(userTeachers[userTeacherIndex]);
+    });
+
+const getById = (id) =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(
+                JSON.parse(localStorage.getItem("userTeachers")).find(
+                    (userTeacher) => userTeacher._id === id
+                )
+            );
+        }, 1000);
+    });
+export default {
+    fetchAll,
+    getById,
+    update
+};
+
+/* const fetchAll = () =>
     new Promise((resolve) => {
         window.setTimeout(function () {
             resolve(userTeachers);
         }, 2000);
     });
+
+const getById = (id) =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(
+                userTeachers.find((userTeacher) => userTeacher._id === id)
+            );
+        }, 1000);
+    });
 export default {
-    fetchAll
-};
+    fetchAll,
+    getById
+}; */

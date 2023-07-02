@@ -15,19 +15,23 @@ const CommentsList = () => {
     const [subjects, setSubjects] = useState();
     const [selectedSubject, setSelectedSubject] = useState();
     const [users, setUsers] = useState();
-    const [sortBy, setSortBy] = useState({ path: "price", order: "desc" });
+    const [sortBy, setSortBy] = useState({ name: "price", order: "desc" });
     const history = useHistory();
 
     const [comments, setComments] = useState();
     useEffect(() => {
         api.comments.fetchAll().then((data) => setComments(data));
     }, []);
-    console.log(comments);
+    // console.log(comments);
     const handleDelete = (commentId) => {
         setComments(comments.filter((comment) => comment._id !== commentId));
     };
     const handleOnClick = (commentId) => {
         history.push("/comments/" + commentId);
+    };
+
+    const handleClickOnTeacherList = () => {
+        history.push("/teachers");
     };
 
     useEffect(() => {
@@ -78,7 +82,6 @@ const CommentsList = () => {
         const clearFilter = () => {
             setSelectedSubject();
         };
-
         return (
             <div className="d-flex">
                 {subjects && (
@@ -124,13 +127,18 @@ const CommentsList = () => {
                     >
                         Задай свой вопрос
                     </button>
-                    <button type="button" className="btn btn-outline-danger">
+                    <button
+                        type="button"
+                        className="btn btn-outline-danger"
+                        onClick={handleClickOnTeacherList}
+                    >
                         Учителя онлайн
                     </button>
                 </div>
             </div>
         );
     }
+
     return "Loading...";
 };
 CommentsList.propTypes = {

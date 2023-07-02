@@ -38,36 +38,9 @@ const NavBar = () => {
                         <Link
                             className="nav-link active"
                             aria-current="page"
-                            to="/comments"
+                            to="/editUserTeacherPage"
                         >
-                            Вопросы
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link
-                            className="nav-link active"
-                            aria-current="page"
-                            to="/responsePage"
-                        >
-                            Ответить
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link
-                            className="nav-link active"
-                            aria-current="page"
-                            to="/userPage"
-                        >
-                            Ученик
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link
-                            className="nav-link active"
-                            aria-current="page"
-                            to="/userTeacherList"
-                        >
-                            Учитель
+                            edit
                         </Link>
                     </li>
                 </ul>

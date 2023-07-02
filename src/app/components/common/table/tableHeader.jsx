@@ -14,7 +14,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
     };
     const renderSortArrow = (selectedSort, currentPath) => {
         if (selectedSort.path === currentPath) {
-            console.log(selectedSort, currentPath);
+            // console.log(selectedSort, currentPath);
             if (selectedSort.order === "asc") {
                 return <i className="bi bi-caret-up-fill"></i>;
             } else {

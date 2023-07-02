@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Subject from "./ui/subjects/subject";
+import Subjects from "./ui/subjects/subjects";
 import Table from "./common/table/table";
 import BookMark from "./bookmark";
+import { Link } from "react-router-dom";
 
 const TeacherTable = ({
     userTeachers,
@@ -14,16 +15,30 @@ const TeacherTable = ({
     ...rest
 }) => {
     const columns = {
-        name: { path: "name", name: "Имя" },
+        name: {
+            path: "name",
+            name: "Имя",
+            component: (userTeacher) => (
+                <Link to={`/teachers/${userTeacher._id}`}>
+                    {userTeacher.name}
+                </Link>
+            )
+        },
         subject: {
             name: "Предмет",
-            component: (comment) => <Subject subject={comment.subject} />
+            component: (userTeacher) => (
+                <Subjects subjects={userTeacher.subjects} />
+            )
         },
         rate: { path: "rate", name: "Оценка" },
+        numberOfQuestions: {
+            path: "numberOfQuestions",
+            name: "Колиство отвеченных вопросов"
+        },
         bookmark: {
             path: "bookmark",
             name: "Избранное",
-            component: (user) => (
+            component: (userTeacher) => (
                 <BookMark
                     status={userTeacher.bookmark}
                     onClick={() => onToggleBookMark(userTeacher._id)}
