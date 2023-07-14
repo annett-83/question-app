@@ -8,7 +8,7 @@ const schema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String },
     numberOfQuestions: Number,
-    image: String,
+    image: { type: String },
     profession: { type: Schema.Types.ObjectId, ref: "Profession" },
     subjects: [{ type: Schema.Types.ObjectId, ref: "Subject" }],
     rate: Number,

@@ -5,10 +5,10 @@ const router = express.Router({ mergeParams: true });
 router.get("/", async (req, res) => {
   try {
     const list = await Profession.find();
-    res.status(200).json({ list });
+    res.status(200).send(list);
   } catch (error) {
     res.status(500).json({
-      message: "на сервере произошла ошибка.Попробуйте позже",
+      message: "На сервере произошла ошибка. Попробуйте позже...",
     });
   }
 });

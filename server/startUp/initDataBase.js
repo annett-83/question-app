@@ -3,7 +3,6 @@ const Subject = require("../models/Subject");
 const professionMock = require("../mock/profeessions.json");
 const subjectsMock = require("../mock/subjects.json");
 
-
 module.exports = async () => {
   const professions = await Profession.find();
   if (professions.length !== professionMock.length) {

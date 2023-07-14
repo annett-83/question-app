@@ -12,4 +12,4 @@ const schema = new Schema(
   }
 );
 
-module.exports = model("Profession", schema);
+module.exports = model("Professions", schema);
